@@ -1,0 +1,19 @@
+.settings-button {
+  padding: 1.2rem 1.7rem;
+  border: solid 0.1rem var(--light-grey);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  column-gap: 1.5rem;
+  cursor: pointer;
+}
+.settings-icon {
+  color: var(--primary);
+  height: 1.6rem;
+  width: 1.8rem;
+}
+
+.settings-button > p {
+  font-size: 1.6rem;
+  font-weight: 700;
+}

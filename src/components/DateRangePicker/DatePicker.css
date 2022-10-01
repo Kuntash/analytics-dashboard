@@ -1,0 +1,28 @@
+.date-range-container {
+  padding: 1.2rem 1.7rem;
+  border: solid 0.1rem var(--light-grey);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  column-gap: 1.5rem;
+  cursor: pointer;
+  position: relative;
+}
+
+.date-range-icon {
+  color: var(--primary);
+  height: 1.6rem;
+  width: 1.8rem;
+}
+
+.date-range-container > p {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.date-range-picker {
+  box-shadow: 0rem 0rem 1rem 1rem var(--box-shadow);
+  position: absolute;
+  top: calc(100% + 1rem);
+  left: 0;
+}
