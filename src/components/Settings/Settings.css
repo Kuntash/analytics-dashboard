@@ -6,6 +6,7 @@
   align-items: center;
   column-gap: 1.5rem;
   cursor: pointer;
+  background-color: transparent;
 }
 .settings-icon {
   color: var(--primary);
@@ -16,4 +17,70 @@
 .settings-button > p {
   font-size: 1.6rem;
   font-weight: 700;
+}
+
+.setting-menu {
+  padding: 1.2rem 1.7rem;
+  display: flex;
+  flex-direction: column;
+  border: solid 0.1rem var(--light-grey);
+  border-radius: 0.5rem;
+  row-gap: 1.5rem;
+}
+
+.setting-menu > h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.menu-column-container {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 1rem;
+}
+
+.menu-column-container > li {
+  border: solid 0.1rem var(--light-grey);
+  border-radius: 0.5rem;
+  padding: 1.2rem 1.7rem;
+  font-size: 1.6rem;
+  font-weight: 400;
+  cursor: move;
+}
+.menu-column-container > li.selected {
+  border-left-width: 0.5rem;
+  border-left-color: var(--primary);
+}
+
+.menu-footer {
+  align-self: flex-end;
+  display: flex;
+  column-gap: 1rem;
+}
+
+.menu-footer > button {
+  padding: 1.2rem 1.7rem;
+  border-radius: 0.5rem;
+  font-size: 1.8rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.menu-footer > button:first-child {
+  border: solid 0.1rem var(--light-grey);
+  border-radius: 0.5rem;
+  color: var(--primary);
+  background-color: transparent;
+}
+
+.menu-footer > button:last-child {
+  border: none;
+  color: var(--light);
+  background-color: var(--primary);
+}
+
+.dragging {
+  opacity: 0.5;
+  
 }
