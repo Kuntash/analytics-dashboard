@@ -1,8 +1,5 @@
 import React, { Dispatch, DragEvent, SetStateAction, useRef } from "react";
-import {
-  getSelectedColumns,
-  setSelectedColumns
-} from "../../app/features/selectedColumnsSlice";
+import { getColumns, setColumns } from "../../app/features/columnsSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 
@@ -10,27 +7,11 @@ export type IProps = {
   setIsSettingMenuOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const allColumns = [
-  "Date",
-  "App",
-  "Clicks",
-  "Ad Requests",
-  "Ad Response",
-  "Impression",
-  "Revenue",
-  "Fill Rate",
-  "CTR"
-];
 const SettingMenu = ({ setIsSettingMenuOpen }: IProps) => {
   const columnContainerRef = useRef<HTMLUListElement | null>(null);
-  const selectedColumns = useAppSelector((state: RootState) =>
-    getSelectedColumns(state)
-  );
+  const allColumns = useAppSelector((state: RootState) => getColumns(state));
   const dispatch = useAppDispatch();
-  const handleDrag = (e: DragEvent<HTMLLIElement>) => {
-    const draggedColumn = e.target;
-    const { clientX: x, clientY: y } = e;
-  };
+
   const handleOnDragStart = (e: DragEvent<HTMLLIElement>) => {
     (e.target as HTMLLIElement).classList.add("dragging");
   };
@@ -41,17 +22,65 @@ const SettingMenu = ({ setIsSettingMenuOpen }: IProps) => {
 
   const handleOnDragOver = (e: DragEvent<HTMLUListElement>) => {
     e.preventDefault();
-    const draggedElement = document.querySelector(".dragging");
+    const draggedElement = document.querySelector(".dragging") as HTMLLIElement;
 
+    const draggingElementXCenter = e.clientX;
+    const draggingElementYCenter = e.clientY;
     /* 
       Steps to change order:
       - Get all the columns that are not in the dragging state.
+      - filter the element by:
+        - The x center of the element has to be on the right side of x center of 
+          draggedElement.
+        - 
       - Find the closest adjacent element in terms of clientX value.
       - If the clientX value is same, compare the clientY value. 
     */
-    const adjacentElement = document.querySelectorAll(
-      ".menu-column-container:"
+    const adjacentElements = Array.from(
+      document.querySelectorAll(".menu-column:not(.dragging)")
     );
+    let closestAfter: Element | null = null,
+      closestXDifferenceAfter = Number.MAX_SAFE_INTEGER;
+    let closestBefore: Element | null = null,
+      closestXDifferenceBefore = Number.MIN_SAFE_INTEGER,
+      closestBeforeIndex = Number.MIN_SAFE_INTEGER;
+    adjacentElements.forEach((element, index) => {
+      const elementDomRect = element.getBoundingClientRect();
+      const xCenter = elementDomRect.left + elementDomRect.width / 2;
+      const xCenterDifferenceAfter = xCenter - draggingElementXCenter;
+      const xCenterDifferenceBefore = draggingElementXCenter - xCenter;
+      if (
+        xCenterDifferenceAfter > 0 &&
+        xCenterDifferenceAfter < closestXDifferenceAfter &&
+        draggingElementYCenter > elementDomRect.top &&
+        draggingElementYCenter < elementDomRect.bottom
+      ) {
+        closestAfter = element;
+        closestXDifferenceAfter = xCenterDifferenceAfter;
+      }
+      if (
+        xCenterDifferenceBefore > 0 &&
+        xCenterDifferenceBefore < closestXDifferenceAfter &&
+        draggingElementYCenter > elementDomRect.top &&
+        draggingElementYCenter < elementDomRect.bottom
+      ) {
+        closestBefore = element;
+        closestBeforeIndex = index;
+      }
+    });
+    console.log("------------------------------------------");
+    console.log(closestAfter, closestBefore);
+    if (closestAfter !== null) {
+      (columnContainerRef.current as HTMLUListElement).insertBefore(
+        draggedElement,
+        closestAfter
+      );
+    } else if (closestBefore !== null) {
+      (columnContainerRef.current as HTMLUListElement).insertBefore(
+        draggedElement,
+        adjacentElements[closestBeforeIndex + 1]
+      );
+    }
   };
 
   const toggleSelectedColumn = (e: React.MouseEvent<HTMLLIElement>) => {
@@ -68,16 +97,20 @@ const SettingMenu = ({ setIsSettingMenuOpen }: IProps) => {
       - Filter those element that contains 'selected' className
       - return the textContent.
     */
-    const tempSelectedColumns = Array.from(
+    const tempColumns = Array.from(
       (columnContainerRef.current as HTMLUListElement).children
-    )
-      .filter((element, index) => {
-        return element.classList.contains("selected");
-      })
-      .map((element, index) => element.textContent);
-    console.log(tempSelectedColumns);
+    ).map((element, index) => {
+      if (element.classList.contains("selected")) {
+        return {
+          selected: true,
+          value: element.textContent as string
+        };
+      } else {
+        return { selected: false, value: element.textContent as string };
+      }
+    });
 
-    dispatch(setSelectedColumns(tempSelectedColumns as string[]));
+    dispatch(setColumns(tempColumns));
 
     setIsSettingMenuOpen(false);
   };
@@ -94,15 +127,12 @@ const SettingMenu = ({ setIsSettingMenuOpen }: IProps) => {
           <li
             key={index}
             onClick={toggleSelectedColumn}
-            className={`menu-column ${
-              selectedColumns.includes(column) ? "selected" : ""
-            }`}
+            className={`menu-column ${column.selected ? "selected" : ""}`}
             draggable
-            onDrag={handleDrag}
             onDragStart={handleOnDragStart}
             onDragEnd={handleOnDragEnd}
           >
-            {column}
+            {column.value}
           </li>
         ))}
       </ul>

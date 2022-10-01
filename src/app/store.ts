@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import reportReducer from "./features/reportsSlice";
 import appReducer from "./features/appSlice";
-import selectedColumnsReducer from "./features/selectedColumnsSlice";
+import columnsReducer from "./features/columnsSlice";
 export const store = configureStore({
   reducer: {
     reports: reportReducer,
     apps: appReducer,
-    selectedColumns: selectedColumnsReducer
+    columns: columnsReducer
   }
 });
 
