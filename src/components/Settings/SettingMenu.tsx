@@ -42,7 +42,6 @@ const SettingMenu = ({ setIsSettingMenuOpen }: IProps) => {
     let closestAfter: Element | null = null,
       closestXDifferenceAfter = Number.MAX_SAFE_INTEGER;
     let closestBefore: Element | null = null,
-      closestXDifferenceBefore = Number.MIN_SAFE_INTEGER,
       closestBeforeIndex = Number.MIN_SAFE_INTEGER;
     adjacentElements.forEach((element, index) => {
       const elementDomRect = element.getBoundingClientRect();
@@ -98,15 +97,21 @@ const SettingMenu = ({ setIsSettingMenuOpen }: IProps) => {
       - return the textContent.
     */
     const tempColumns = Array.from(
-      (columnContainerRef.current as HTMLUListElement).children
+      (columnContainerRef.current as HTMLUListElement)
+        .children as HTMLCollectionOf<HTMLElement>
     ).map((element, index) => {
       if (element.classList.contains("selected")) {
         return {
           selected: true,
-          value: element.textContent as string
+          value: element.textContent as string,
+          id: element.dataset.columnId as string
         };
       } else {
-        return { selected: false, value: element.textContent as string };
+        return {
+          selected: false,
+          value: element.textContent as string,
+          id: element.dataset.columnId as string
+        };
       }
     });
 
@@ -125,6 +130,7 @@ const SettingMenu = ({ setIsSettingMenuOpen }: IProps) => {
       >
         {allColumns.map((column, index) => (
           <li
+            data-column-id={column.id}
             key={index}
             onClick={toggleSelectedColumn}
             className={`menu-column ${column.selected ? "selected" : ""}`}

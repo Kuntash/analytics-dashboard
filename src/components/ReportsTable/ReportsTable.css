@@ -1,0 +1,46 @@
+.reports-table {
+  width: 100%;
+  overflow: scroll;
+}
+
+.reports-table-row {
+  width: 100%;
+  display: flex;
+  padding: 1.5rem 2rem;
+  text-align: left;
+}
+
+.reports-table-row:not(:last-child) {
+  border-bottom: 0.1rem solid var(--box-shadow);
+}
+
+.reports-table-heading-row {
+  border-bottom: 0.1rem solid var(--box-shadow);
+}
+.reports-table-row > * {
+  flex: 1;
+}
+
+.reports-table-heading-cell {
+  cursor: pointer;
+}
+.reports-table-heading-cell > p {
+  font-size: 2.8rem;
+  color: var(--secondary);
+  font-weight: 400;
+}
+.reports-table-heading-cell > h1 {
+  font-size: 1.8rem;
+  color: var(--dark-grey);
+  margin-bottom: 1.5rem;
+}
+
+.reports-table-cell {
+  font-size: 1.8rem;
+}
+.filter-icon {
+  color: var(--dark-grey);
+  height: 1.8rem;
+  width: 1.8rem;
+  margin-bottom: 1.2rem;
+}

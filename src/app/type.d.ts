@@ -4,11 +4,12 @@ export type AllReports = {
 };
 
 export type Report = {
+  [key: string]: string | number;
   date: string;
   app_id: number;
   requests: number;
   responses: number;
-  impression: number;
+  impressions: number;
   clicks: number;
   revenue: number;
 };
@@ -21,4 +22,10 @@ export type AllApps = {
 export type App = {
   app_id: number;
   app_name: string;
+};
+
+export type DateRangeType = {
+  startDate: Date;
+  endDate: Date;
+  key: string;
 };

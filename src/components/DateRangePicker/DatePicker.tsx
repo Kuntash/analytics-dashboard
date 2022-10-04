@@ -1,22 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { DateRange, RangeKeyDict } from "react-date-range";
 import { FaCalendarAlt } from "react-icons/fa";
 import "./DatePicker.css";
-const DatePicker = () => {
+import { DateRangeType } from "../../app/type";
+import { useSearchParams } from "react-router-dom";
+import { format } from "date-fns";
+
+export type IProps = {
+  selectionRange: DateRangeType;
+  setSelectionRange: Dispatch<SetStateAction<DateRangeType>>;
+};
+const DatePicker = ({ selectionRange, setSelectionRange }: IProps) => {
   const [dateRangeDisplay, setDateRangeDisplay] = useState(
     "Please select a date range"
   );
   const [showDateRangePicker, setShowDateRangePicker] = useState(false);
-  const [selectionRange, setSelectionRange] = useState({
-    startDate: new Date(2021, 5, 1),
-    endDate: new Date(2021, 5, 30),
-    key: "selectionRange"
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
   const [countDateChange, setCountDateChange] = useState(0);
-  const toggleDateRangePicker = (e: React.MouseEvent) => {
-    console.log();
+  const toggleDateRangePicker = () => {
     setShowDateRangePicker(!showDateRangePicker);
   };
   const handleDateRangeChange = (ranges: RangeKeyDict) => {
@@ -31,11 +34,15 @@ const DatePicker = () => {
       endDate: endDate,
       key: "selectionRange"
     });
-
+    searchParams.delete("start_date");
+    searchParams.delete("end_date");
+    searchParams.append("start_date", format(startDate, "yyyy-MM-dd"));
+    searchParams.append("end_date", format(endDate, "yyyy-MM-dd"));
+    setSearchParams(searchParams);
     /* TODO: Dispatch the api call whenever a new date range is selected */
     /* Mechanism to open and close the date range picker */
     if (countDateChange % 2 === 1) {
-      setShowDateRangePicker(!showDateRangePicker);
+      toggleDateRangePicker();
     }
     setCountDateChange(countDateChange + 1);
   };

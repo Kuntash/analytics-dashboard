@@ -7,6 +7,7 @@ export const greedyGameApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://go-dev.greedygame.com/v3/dummy/"
   }),
+
   endpoints: (builder) => ({
     getReportsByDate: builder.query<
       AllReports,
@@ -15,7 +16,7 @@ export const greedyGameApi = createApi({
       query: ({ startDate, endDate }) =>
         `report?startDate=${startDate}&endDate=${endDate}`
     }),
-    getAllApps: builder.query<AllApps, any>({
+    getAllApps: builder.query<AllApps, void>({
       query: () => `apps`
     })
   })

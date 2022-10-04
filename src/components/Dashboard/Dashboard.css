@@ -1,6 +1,18 @@
 .dashboard {
   padding: 3rem;
   flex: 1;
+  position: relative;
+}
+
+.dashboard-overlay::after {
+  top: 0;
+  left: 0;
+  position: absolute;
+  content: "";
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 .dashboard > h1 {
@@ -16,4 +28,112 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+}
+
+.select-filter {
+  background-color: var(--light);
+  padding: 1.2rem 1.7rem;
+  border: solid 0.1rem var(--light-grey);
+  border-radius: 0.5rem;
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.select-filter > h1 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--secondary);
+}
+
+.search-input {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 1rem;
+  border: 0.3rem solid var(--primary);
+}
+
+.search-input,
+.search-input:focus {
+  outline: none;
+}
+
+.search-input::placeholder {
+  font-size: 1.5rem;
+  color: var(--slate-grey);
+}
+.searched-apps {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
+}
+
+.apply-filter-button {
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  cursor: pointer;
+  border: none;
+  color: var(--light);
+  background-color: var(--primary);
+}
+
+.app > h5 {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.app > p {
+  font-size: 1.1rem;
+}
+
+.search-container {
+  padding-left: 1.5rem;
+}
+
+.slide-filter {
+  background-color: var(--light);
+  padding: 1.2rem 1.7rem;
+  border: solid 0.1rem var(--light-grey);
+  border-radius: 0.5rem;
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.slide-input {
+  width: 20rem;
+  height: 1.5rem;
+  outline: none;
+}
+
+.range-values {
+  display: flex;
+  justify-content: space-between;
+}
+
+.range-values > p {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.reset-slide {
+  border: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  background-color: transparent;
+}
+.slide-buttons {
+  display: flex;
+  justify-content: space-between;
 }

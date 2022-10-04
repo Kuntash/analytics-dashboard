@@ -9,11 +9,12 @@ const appsSlice = createSlice({
   initialState,
   reducers: {
     setApps: (state, action: PayloadAction<App[]>) => {
-      state = action.payload;
+      return action.payload;
     }
   }
 });
 
+export const { setApps } = appsSlice.actions;
 export const selectAppById = (state: RootState, appId: number) =>
   state.apps.find((app, index) => app.app_id === appId);
 export const selectApps = (state: RootState) => state.apps;

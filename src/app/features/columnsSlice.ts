@@ -5,16 +5,17 @@ import { RootState } from "../store";
 const initialState: {
   value: string;
   selected: boolean;
+  id: string;
 }[] = [
-  { value: "Date", selected: true },
-  { value: "App", selected: true },
-  { value: "Clicks", selected: true },
-  { value: "Ad Requests", selected: true },
-  { value: "Ad Response", selected: true },
-  { value: "Impression", selected: true },
-  { value: "Revenue", selected: true },
-  { value: "Fill Rate", selected: true },
-  { value: "CTR", selected: true }
+  { value: "Date", selected: true, id: "date" },
+  { value: "App", selected: true, id: "app_name" },
+  { value: "Clicks", selected: true, id: "clicks" },
+  { value: "Ad Requests", selected: true, id: "requests" },
+  { value: "Ad Response", selected: true, id: "responses" },
+  { value: "Impressions", selected: true, id: "impressions" },
+  { value: "Revenue", selected: true, id: "revenue" },
+  { value: "Fill Rate", selected: true, id: "fill_rate" },
+  { value: "CTR", selected: true, id: "ctr" }
 ];
 export const columnsSlice = createSlice({
   name: "selectedColumns",
@@ -22,7 +23,7 @@ export const columnsSlice = createSlice({
   reducers: {
     setColumns: (
       state,
-      action: PayloadAction<{ value: string; selected: boolean }[]>
+      action: PayloadAction<{ value: string; selected: boolean; id: string }[]>
     ) => {
       console.log("payload: ", action.payload);
       return action.payload;

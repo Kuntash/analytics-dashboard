@@ -9,10 +9,10 @@ export const reportsSlice = createSlice({
   initialState,
   reducers: {
     setReports: (state, action: PayloadAction<Report[]>) => {
-      state = action.payload;
+      return action.payload;
     },
     resetReports: (state) => {
-      state = [];
+      return [];
     }
   }
 });
