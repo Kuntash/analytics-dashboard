@@ -5,7 +5,7 @@ import { AllApps, AllReports } from "../type";
 export const greedyGameApi = createApi({
   reducerPath: "greedyGameApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://go-dev.greedygame.com/v3/dummy/"
+    baseUrl: "https://go-dev.greedygame.com/v3/dummy/"
   }),
 
   endpoints: (builder) => ({
