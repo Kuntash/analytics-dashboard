@@ -17,7 +17,7 @@ const Dashboard = () => {
   /* boolean state to toggle Setting Menu's visibility */
   const dispatch = useAppDispatch();
   const [isSettingMenuOpen, setIsSettingMenuOpen] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [selectionRange, setSelectionRange] = useState<DateRangeType>({
     startDate: new Date(2021, 5, 1),
     endDate: new Date(2021, 5, 5),

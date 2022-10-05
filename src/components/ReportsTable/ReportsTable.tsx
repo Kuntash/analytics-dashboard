@@ -19,7 +19,7 @@ const ReportsTable = ({
   dateDifference,
   setFilterColumn
 }: IReportsTableProps) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const reportsColumns = useAppSelector((state: RootState) =>
     getColumns(state)
   );
